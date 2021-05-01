@@ -39,15 +39,14 @@ while game_is_on == "yes":
         wait_player1_move = True
         while wait_player1_move:
             game_board_printing(game_board)
-            player1_move = int(input("player 1 move, choose the number between 1,9? "))
-            if player1_move > 9 or player1_move <= 0:
+            player1_move = int(input("player 1 move, choose the number between 1,9? ")) - 1
+            if player1_move > 9 or player1_move < 0:
                 print("Please choose a number between 1 and 9 ")
             elif player1_move in places_taken:
                 print("Place already chosen, choose another number ")
             else:
-                p1.player_moves.append(player1_move - 1)
-                places_taken.append(player1_move - 1)
-                print(places_taken)
+                p1.player_moves.append(player1_move)
+                places_taken.append(player1_move)
                 game_turns += 1
                 wait_player1_move = False
 
@@ -60,16 +59,15 @@ while game_is_on == "yes":
         wait_player2_move = True
         while wait_player2_move:
             game_board_printing(game_board)
-            player2_move = int(input("player 2 move, choose the number between 1,9? "))
-            if player2_move > 9 or player2_move <= 0:
+            player2_move = int(input("player 2 move, choose the number between 1,9? ")) - 1
+            if player2_move > 9 or player2_move < 0:
                 print("Please choose a number between 1 and 9 ")
             elif player2_move in places_taken:
                 print("Place already chosen, choose another number ")
             else:
-                p2.player_moves.append(player2_move - 1)
-                places_taken.append(player2_move - 1)
+                p2.player_moves.append(player2_move)
+                places_taken.append(player2_move)
                 game_turns += 1
-                print(places_taken)
                 wait_player2_move = False
         update_game_board(p1.player_moves, p2.player_moves)
 
