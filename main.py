@@ -31,6 +31,32 @@ def update_game_board(player1_moves, player2_moves):
             game_board.append("-")
 
 
+def check_game_status(player_symbol):
+    global game_board
+    if game_board.count(player_symbol) < 3:
+        return None
+    else:
+        if all(i == player_symbol for i in game_board[:2]):
+            return True
+        elif all(i == player_symbol for i in game_board[0:8:4]):
+            return True
+        elif all(i == player_symbol for i in game_board[0:6:3]):
+            return True
+        elif all(i == player_symbol for i in game_board[1:7:3]):
+            return True
+        elif all(i == player_symbol for i in game_board[2:6:2]):
+            return True
+        elif all(i == player_symbol for i in game_board[2:8:3]):
+            return True
+        elif all(i == player_symbol for i in game_board[3:5]):
+            return True
+        elif all(i == player_symbol for i in game_board[6:8]):
+            return True
+        else:
+            return None
+
+
+
 game_is_on = input("Do you want to start the game? (yes or no) ").lower()
 
 while game_is_on == "yes":
@@ -47,10 +73,12 @@ while game_is_on == "yes":
             else:
                 p1.player_moves.append(player1_move)
                 places_taken.append(player1_move)
+                update_game_board(p1.player_moves, p2.player_moves)
                 game_turns += 1
+                p1.player_status = check_game_status("X")
+                print(f" player 1: {p1.player_status}")
                 wait_player1_move = False
 
-        update_game_board(p1.player_moves, p2.player_moves)
 
         if game_turns == 9:
             game_board_printing(game_board)
@@ -67,9 +95,11 @@ while game_is_on == "yes":
             else:
                 p2.player_moves.append(player2_move)
                 places_taken.append(player2_move)
+                update_game_board(p1.player_moves, p2.player_moves)
                 game_turns += 1
+                p2.player_status = check_game_status("O")
+                print(f" player 2: {p2.player_status}")
                 wait_player2_move = False
-        update_game_board(p1.player_moves, p2.player_moves)
 
 
     game_is_on = "off"
