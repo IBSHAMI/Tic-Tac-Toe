@@ -36,23 +36,33 @@ def check_game_status(player_symbol):
     if game_board.count(player_symbol) < 3:
         return None
     else:
-        if all(i == player_symbol for i in game_board[:2]):
+        print(game_board)
+        if not any(i != player_symbol for i in game_board[:3]):
+            print("here1")
             return True
-        elif all(i == player_symbol for i in game_board[0:8:4]):
+        elif not any(i != player_symbol for i in game_board[0:9:4]):
+            print("here2")
             return True
-        elif all(i == player_symbol for i in game_board[0:6:3]):
+        elif not any(i != player_symbol for i in game_board[0:7:3]):
+            print("here3")
             return True
-        elif all(i == player_symbol for i in game_board[1:7:3]):
+        elif not any(i != player_symbol for i in game_board[1:8:3]):
+            print("here4")
             return True
-        elif all(i == player_symbol for i in game_board[2:6:2]):
+        elif not any(i != player_symbol for i in game_board[2:7:2]):
+            print("here5")
             return True
-        elif all(i == player_symbol for i in game_board[2:8:3]):
+        elif not any(i != player_symbol for i in game_board[2:9:3]):
+            print("here6")
             return True
-        elif all(i == player_symbol for i in game_board[3:5]):
+        elif not any(i != player_symbol for i in game_board[3:6]):
+            print("here7")
             return True
-        elif all(i == player_symbol for i in game_board[6:8]):
+        elif not any(i != player_symbol for i in game_board[6:9]):
+            print("here8")
             return True
         else:
+            print("here lose")
             return None
 
 
