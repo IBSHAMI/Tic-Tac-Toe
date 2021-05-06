@@ -1,10 +1,14 @@
-from player1 import Player1
-from player2 import Player2
+class Player:
+    def __init__(self):
+        self.player_status = None
+        self.player_moves = []
 
-p1 = Player1()
-p2 = Player2()
+
+p1 = Player()
+p2 = Player()
 game_turns = 0
 game_board = ["-", "-", "-", "-", "-", "-", "-", "-", "-"]
+game_status = None
 places_taken = []
 
 
@@ -36,34 +40,32 @@ def check_game_status(player_symbol):
     if game_board.count(player_symbol) < 3:
         return None
     else:
-        print(game_board)
         if not any(i != player_symbol for i in game_board[:3]):
-            print("here1")
             return True
         elif not any(i != player_symbol for i in game_board[0:9:4]):
-            print("here2")
             return True
         elif not any(i != player_symbol for i in game_board[0:7:3]):
-            print("here3")
             return True
         elif not any(i != player_symbol for i in game_board[1:8:3]):
-            print("here4")
             return True
         elif not any(i != player_symbol for i in game_board[2:7:2]):
-            print("here5")
             return True
         elif not any(i != player_symbol for i in game_board[2:9:3]):
-            print("here6")
             return True
         elif not any(i != player_symbol for i in game_board[3:6]):
-            print("here7")
             return True
         elif not any(i != player_symbol for i in game_board[6:9]):
-            print("here8")
             return True
         else:
-            print("here lose")
             return None
+
+
+def game_outcome_check():
+    global game_status, game_turns
+    if game_turns == 9:
+        game_status = "Draw"
+    elif game_status is not None:
+        return "Game finished"
 
 
 
@@ -86,13 +88,14 @@ while game_is_on == "yes":
                 update_game_board(p1.player_moves, p2.player_moves)
                 game_turns += 1
                 p1.player_status = check_game_status("X")
-                print(f" player 1: {p1.player_status}")
+                if p1.player_status:
+                    game_status = "Player 1 win"
                 wait_player1_move = False
 
-
-        if game_turns == 9:
-            game_board_printing(game_board)
+        end = game_outcome_check()
+        if end == "Game finished":
             break
+
 
         wait_player2_move = True
         while wait_player2_move:
@@ -108,8 +111,14 @@ while game_is_on == "yes":
                 update_game_board(p1.player_moves, p2.player_moves)
                 game_turns += 1
                 p2.player_status = check_game_status("O")
-                print(f" player 2: {p2.player_status}")
+                if p2.player_status:
+                    game_status = "Player 2 win"
                 wait_player2_move = False
 
+        end = game_outcome_check()
+        if end == "Game finished":
+            break
 
+    game_board_printing(game_board)
+    print(f"The game ended up with: {game_status}")
     game_is_on = "off"
